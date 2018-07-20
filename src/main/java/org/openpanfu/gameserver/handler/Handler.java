@@ -8,6 +8,7 @@
 package org.openpanfu.gameserver.handler;
 
 import org.openpanfu.gameserver.constants.Packets;
+import org.openpanfu.gameserver.constants.RoomCommands;
 import org.openpanfu.gameserver.util.Logger;
 
 import java.util.HashMap;
@@ -26,7 +27,7 @@ public class Handler
         handlers.put(Packets.CMD_PLAYER_TO_PLAYER, new CMD_PLAYER_TO_PLAYER());
         handlers.put(Packets.CMD_MOVE, new CMD_MOVE());
         handlers.put(Packets.CMD_JOIN_ROOM, new CMD_JOIN_ROOM());
-        handlers.put(140, new CMD_QUERY_SHARED_ITEMS());
+        handlers.put(RoomCommands.QUERY_SHARED_ITEMS, new CMD_QUERY_SHARED_ITEMS());
         Logger.info("Registered " + handlers.size() + " Packet handlers.");
     }
 }
