@@ -1,0 +1,6 @@
+# IDE
+.idea
+
+# Maven
+dependency-reduced-pom.xml
+target
