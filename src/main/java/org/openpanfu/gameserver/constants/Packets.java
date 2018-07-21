@@ -51,8 +51,6 @@ public class Packets
     public static final int CMD_SHOW_GS_MSG = 260;
     public static final int CMD_RECIEVE_NEW_MSGBOARD_MSG = 270;
     public static final int CMD_GET_SALT = 301;
-    public static final int CMD_SB_LOGIN = 800;
-    public static final int CMD_OPTIN = 801;
 
     // S->C
     public static final int RES_ON_LOGIN = 0;
