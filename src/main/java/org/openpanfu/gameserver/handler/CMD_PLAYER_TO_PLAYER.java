@@ -17,6 +17,7 @@ public class CMD_PLAYER_TO_PLAYER implements IHandler {
     public void handlePacket(PanfuPacket packet, User sender) {
         String Reciever = packet.readString();
         int Command = packet.readInt();
+        PanfuPacket response = new PanfuPacket(Packets.RES_PLAYER_TO_PLAYER);
         if(Reciever.equals(String.valueOf(PlayerToPlayerCommands.P2P_RECEIVER_ROOM))) {
             switch(Command) {
                 case PlayerToPlayerCommands.CMD_CREATE_AVATAR:
@@ -28,18 +29,28 @@ public class CMD_PLAYER_TO_PLAYER implements IHandler {
                     String pokopetType = packet.readString();
                     int sheriff = packet.readInt();
                     String clothes = packet.readString();
-                    PanfuPacket Response = new PanfuPacket(Packets.RES_PLAYER_TO_PLAYER);
-                    Response.writeInt(sender.getUserId());
-                    Response.writeInt(PlayerToPlayerCommands.ON_CREATE_AVATAR);
-                    Response.writeInt(x);
-                    Response.writeInt(y);
-                    Response.writeString(action);
-                    Response.writeInt(rotation);
-                    Response.writeString(timeTravel);
-                    Response.writeString(pokopetType);
-                    Response.writeInt(sender.getSheriff());
-                    Response.writeString(clothes);
-                    sender.sendRoomExcludingMe(Response);
+                    response.writeInt(sender.getUserId());
+                    response.writeInt(PlayerToPlayerCommands.ON_CREATE_AVATAR);
+                    response.writeInt(x);
+                    response.writeInt(y);
+                    response.writeString(action);
+                    response.writeInt(rotation);
+                    response.writeString(timeTravel);
+                    response.writeString(pokopetType);
+                    response.writeInt(sender.getSheriff());
+                    response.writeString(clothes);
+                    sender.sendRoomExcludingMe(response);
+                    break;
+                case PlayerToPlayerCommands.CMD_UPDATE_AVATAR:
+                    String pokopet = packet.readString();
+                    int unknown = packet.readInt();
+                    String playerString = packet.readString();
+                    response.writeInt(sender.getUserId());
+                    response.writeInt(PlayerToPlayerCommands.ON_UPDATE_AVATAR);
+                    response.writeString(pokopet);
+                    response.writeInt(sender.getSheriff());
+                    response.writeString(playerString);
+                    sender.sendRoom(response);
                     break;
                 case PlayerToPlayerCommands.CMD_SHOW_STATUS:
                     PanfuPacket StatusBroadcast = new PanfuPacket(Packets.RES_PLAYER_TO_PLAYER);
