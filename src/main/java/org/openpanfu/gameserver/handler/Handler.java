@@ -26,6 +26,7 @@ public class Handler
         handlers.put(Packets.CMD_GET_PLAYER_IDS_BY_CLOTHES, new CMD_GET_PLAYER_IDS_BY_CLOTHES());
         handlers.put(Packets.CMD_PLAYER_TO_PLAYER, new CMD_PLAYER_TO_PLAYER());
         handlers.put(Packets.CMD_MOVE, new CMD_MOVE());
+        handlers.put(Packets.CMD_CHAT, new CMD_CHAT());
         handlers.put(Packets.CMD_EMOTE, new CMD_EMOTE());
         handlers.put(Packets.CMD_JOIN_ROOM, new CMD_JOIN_ROOM());
         handlers.put(Packets.CMD_JOIN_GAME, new CMD_JOIN_GAME());
