@@ -29,6 +29,7 @@ public class User {
     private Channel channel;
     private GameServer gameServer;
     private boolean inHome = false;
+    private int gameId = -1;
     private int roomId = -1;
     private int x;
     private int y;
@@ -274,6 +275,21 @@ public class User {
     public void setRoomId(int roomId)
     {
         this.roomId = roomId;
+    }
+
+    public int getCurrentGame()
+    {
+        return this.gameId;
+    }
+
+    public void joinGame(int gameId)
+    {
+        this.gameId = gameId;
+    }
+
+    public void quitGame()
+    {
+        this.gameId = -1;
     }
 
     public int getX()
