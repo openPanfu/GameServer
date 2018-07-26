@@ -50,7 +50,7 @@ public class User {
         IHandler packetHandler = Handler.handlers.get(panfuPacket.getHeader());
         if(!this.isLoggedIn) {
             if(panfuPacket.getHeader() != Packets.CMD_LOGIN && panfuPacket.getHeader() != Packets.CMD_GET_SALT) {
-                Logger.warning("User tried inputting a forbidden packet!");
+                Logger.warning("User tried inputting a forbidden packet for the state he is in! (Not logged in) Attempted packet: " + panfuPacket.getHeader());
                 return;
             }
         }

@@ -14,11 +14,14 @@ public class CMD_CHAT implements IHandler {
     public void handlePacket(PanfuPacket packet, User sender)
     {
         String text = packet.readString();
+        if(text.length() > 120) {
+            sender.disconnect("KICK_SHUTDOWN_MSG");
+        }
         List<String> textParts = new ArrayList(Arrays.asList(text.split(" ")));
         if(textParts.get(0).startsWith("#")) {
             textParts.remove(0);
         }
-        text = String.join(" ", textParts);
+        text = String.join(" ", textParts).replaceAll("\\<[^>]*>","");
 
         if(sender.getSheriff() > 0) {
             text = GameServer.getProperties().getProperty("chat.sheriff.prefix") + " " + text;
