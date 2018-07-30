@@ -35,10 +35,10 @@ public class CMD_LOGIN implements IHandler
             if(resultSet.next()) {
                 sender.setUserId(resultSet.getInt("id"));
                 sender.setGoldpanda(resultSet.getInt("goldpanda"));
-                sender.setUsername(resultSet.getString("username"));
+                sender.setUsername(resultSet.getString("name"));
                 sender.setSheriff(resultSet.getInt("sheriff"));
                 sender.setCurrentGameServer(sender.getGameServer().getId());
-                Logger.info("User " + resultSet.getString("username") + " logged in!");
+                Logger.info("User " + resultSet.getString("name") + " logged in!");
                 sender.getGameServer().getSessionManager().addUser(sender);
                 sender.setLoggedIn(true);
 
