@@ -119,7 +119,7 @@ public class GameServer {
     {
         try {
             Connection database = Database.getConnection();
-            PreparedStatement preparedStatement = database.prepareStatement("UPDATE gameservers SET playerCount = ? where id = ?");
+            PreparedStatement preparedStatement = database.prepareStatement("UPDATE gameservers SET player_count = ? where id = ?");
             preparedStatement.setInt(1, this.sessionManager.getUserCount());
             preparedStatement.setInt(2, this.id);
             preparedStatement.executeUpdate();

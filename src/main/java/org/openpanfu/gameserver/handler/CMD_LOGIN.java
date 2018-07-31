@@ -28,7 +28,7 @@ public class CMD_LOGIN implements IHandler
         int startRoom = packet.readInt();
         try {
             Connection database = Database.getConnection();
-            PreparedStatement preparedStatement = database.prepareStatement("SELECT * FROM users WHERE id = ? AND ticketId = ? LIMIT 1");
+            PreparedStatement preparedStatement = database.prepareStatement("SELECT * FROM users WHERE id = ? AND ticket_id = ? LIMIT 1");
             preparedStatement.setInt(1, userId);
             preparedStatement.setInt(2, sessionTicket);
             ResultSet resultSet = preparedStatement.executeQuery();

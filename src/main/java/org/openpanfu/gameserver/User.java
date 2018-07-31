@@ -85,7 +85,7 @@ public class User {
     {
         try {
             Connection database = Database.getConnection();
-            PreparedStatement preparedStatement = database.prepareStatement("UPDATE users SET currentGameServer = ? where id = ?");
+            PreparedStatement preparedStatement = database.prepareStatement("UPDATE users SET current_gameserver = ? where id = ?");
             preparedStatement.setInt(1, gameServerId);
             preparedStatement.setInt(2, this.userId);
             preparedStatement.executeUpdate();
@@ -193,7 +193,7 @@ public class User {
             gameServer.updateUserCount();
             try {
                 Connection database = Database.getConnection();
-                PreparedStatement preparedStatement = database.prepareStatement("UPDATE users SET currentGameServer = NULL where id = ?");
+                PreparedStatement preparedStatement = database.prepareStatement("UPDATE users SET current_gameserver = NULL where id = ?");
                 preparedStatement.setInt(1, this.userId);
                 preparedStatement.executeUpdate();
                 database.close();
