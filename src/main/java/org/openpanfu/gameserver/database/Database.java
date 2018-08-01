@@ -24,7 +24,7 @@ public class Database {
         HikariConfig config = new HikariConfig();
         try {
             Properties properties = GameServer.getProperties();
-            config.setJdbcUrl(String.format("jdbc:mysql://%s:%s/%s", properties.getProperty("database.host"), properties.getProperty("database.port"), properties.getProperty("database.database")));
+            config.setJdbcUrl(String.format("jdbc:mysql://%s:%s/%s?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", properties.getProperty("database.host"), properties.getProperty("database.port"), properties.getProperty("database.database")));
             config.setUsername(properties.getProperty("database.user"));
             config.setPassword(properties.getProperty("database.pass"));
             config.setDriverClassName("com.mysql.cj.jdbc.Driver");
