@@ -24,7 +24,7 @@ public class CMD_CHAT implements IHandler {
         text = String.join(" ", textParts).replaceAll("\\<[^>]*>","");
 
         if(sender.getSheriff() > 0) {
-            text = GameServer.getProperties().getProperty("chat.sheriff.prefix") + " " + text;
+            text = "#" + GameServer.getProperties().getProperty("chat.sheriff.prefix") + " " + text;
         }
 
         PanfuPacket chatPacket = new PanfuPacket(Packets.RES_CHAT_MSG);
