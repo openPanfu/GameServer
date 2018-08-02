@@ -387,13 +387,13 @@ public class User {
         this.lastActionPerformedTime = lastActionPerformedTime;
     }
 
-    public int getSpamWarning()
+    public int getSpamWarningsGiven()
     {
         return spamWarning;
     }
 
-    public void setSpamWarning(int spamWarning)
+    public void incrementSpamWarning()
     {
-        this.spamWarning = spamWarning;
+        this.spamWarning++;
     }
 }
