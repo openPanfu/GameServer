@@ -39,6 +39,8 @@ public class CMD_MOVE implements IHandler {
             sender.disconnect("Error: CMD_MOVE, unknown movement type.");
         }
 
+        sender.nullInteractions();
+
         switch(type) {
             case MOVEMENT_TYPE_WALK:
                 int msLeft = 0;
