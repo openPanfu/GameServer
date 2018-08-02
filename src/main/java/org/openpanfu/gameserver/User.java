@@ -37,6 +37,11 @@ public class User {
     private int rot = 0;
     private int interactingWith = -1;
     private long timeUntilWalkComplete;
+    private String lastChatMessage = "";
+    private long lastChatMessageTime = System.currentTimeMillis();
+    private String lastActionPerformed = "";
+    private long lastActionPerformedTime = System.currentTimeMillis();
+    private int spamWarning = 0;
 
     public User(Channel channel, GameServer gameServer)
     {
@@ -342,4 +347,53 @@ public class User {
         this.timeUntilWalkComplete = timeUntilWalkComplete;
     }
 
+    public String getLastChatMessage()
+    {
+        return lastChatMessage;
+    }
+
+    public void setLastChatMessage(String lastChatMessage)
+    {
+        this.lastChatMessage = lastChatMessage;
+    }
+
+    public String getLastActionPerformed()
+    {
+        return lastActionPerformed;
+    }
+
+    public void setLastActionPerformed(String lastActionPerformed)
+    {
+        this.lastActionPerformed = lastActionPerformed;
+    }
+
+    public long getLastChatMessageTime()
+    {
+        return lastChatMessageTime;
+    }
+
+    public void setLastChatMessageTime(long lastChatMessageTime)
+    {
+        this.lastChatMessageTime = lastChatMessageTime;
+    }
+
+    public long getLastActionPerformedTime()
+    {
+        return lastActionPerformedTime;
+    }
+
+    public void setLastActionPerformedTime(long lastActionPerformedTime)
+    {
+        this.lastActionPerformedTime = lastActionPerformedTime;
+    }
+
+    public int getSpamWarning()
+    {
+        return spamWarning;
+    }
+
+    public void setSpamWarning(int spamWarning)
+    {
+        this.spamWarning = spamWarning;
+    }
 }
