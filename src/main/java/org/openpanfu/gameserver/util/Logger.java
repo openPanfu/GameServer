@@ -7,6 +7,8 @@
 
 package org.openpanfu.gameserver.util;
 
+import org.openpanfu.gameserver.GameServer;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -25,7 +27,10 @@ public class Logger {
     {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        System.out.println(String.format("%s[%s] %s > %s%s", colorCode, sdf.format(cal.getTime()).toString(), Level, Message, ANSI_RESET));
+        if(Integer.valueOf(GameServer.getProperties().getProperty("gameserver.ansilogging")) != 0)
+            System.out.println(String.format("%s[%s] %s > %s%s", colorCode, sdf.format(cal.getTime()).toString(), Level, Message, ANSI_RESET));
+        else
+            System.out.println(String.format("[%s] %s > %s", sdf.format(cal.getTime()).toString(), Level, Message));
     }
     public static void info(String Message)
     {
