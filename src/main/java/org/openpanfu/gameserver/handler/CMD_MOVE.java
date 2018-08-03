@@ -35,7 +35,7 @@ public class CMD_MOVE implements IHandler {
         int toX = packet.readInt();
         int toY = packet.readInt();
         int type = packet.readInt();
-        if(type < 0 || type > 8) {
+        if(type > 8) {
             sender.disconnect("Error: CMD_MOVE, unknown movement type.");
         }
 

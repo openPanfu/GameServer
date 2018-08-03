@@ -36,8 +36,7 @@ public class GameServer {
     private SessionManager sessionManager;
     private Channel channel;
 
-    public GameServer(int id, String name, int port) throws InterruptedException
-    {
+    public GameServer(int id, String name, int port) {
         this.id = id;
         this.name = name;
         this.port = port;

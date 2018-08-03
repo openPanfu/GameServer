@@ -7,9 +7,7 @@ import io.netty.handler.codec.Delimiters;
 
 public class GameServerFrameDecoder extends DelimiterBasedFrameDecoder {
     public GameServerFrameDecoder(int maxFrameLength) {
-        super(maxFrameLength, false,  new ByteBuf[] {
-                Unpooled.wrappedBuffer(new byte[] { '|'}),
-                Unpooled.wrappedBuffer(new byte[] { '>'})
-        });
+        super(maxFrameLength, false, Unpooled.wrappedBuffer(new byte[] { '|'}),
+                Unpooled.wrappedBuffer(new byte[] { '>'}));
     }
 }

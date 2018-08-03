@@ -392,7 +392,20 @@ public class User {
         return spamWarning;
     }
 
-    public void giveSpamWarning()
+    public void giveActionSpamWarning()
+    {
+        if(this.spamWarning == Integer.valueOf(GameServer.getProperties().getProperty("chat.antispam.warnings"))) {
+            this.disconnect("KICKED: Anti-Spam");
+            return;
+        }
+        this.spamWarning++;
+        String alert = GameServer.getProperties().getProperty("actions.antispam.message");
+        alert = alert.replaceAll("&&warns&&", String.valueOf(this.spamWarning));
+        alert = alert.replaceAll("&&maxwarns&&", GameServer.getProperties().getProperty("chat.antispam.warnings"));
+        this.sendAlert(alert);
+    }
+
+    public void giveChatSpamWarning()
     {
         if(this.spamWarning == Integer.valueOf(GameServer.getProperties().getProperty("chat.antispam.warnings"))) {
             this.disconnect("KICKED: Anti-Spam");

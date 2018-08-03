@@ -37,8 +37,7 @@ public class GameServerHandler extends SimpleChannelInboundHandler<String>
     }
 
     @Override
-    public void channelRead0(ChannelHandlerContext channelHandlerContext, String message) throws Exception
-    {
+    public void channelRead0(ChannelHandlerContext channelHandlerContext, String message) {
         // Useless characters, they only make interpretation harder.
         // You can't use them in things like chat anyway, so it's safe to ignore them.
         message = message.replace("\r", "");
