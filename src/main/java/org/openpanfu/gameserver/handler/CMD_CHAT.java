@@ -4,6 +4,7 @@ import org.openpanfu.gameserver.GameServer;
 import org.openpanfu.gameserver.PanfuPacket;
 import org.openpanfu.gameserver.User;
 import org.openpanfu.gameserver.constants.Packets;
+import org.openpanfu.gameserver.util.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,6 +14,15 @@ public class CMD_CHAT implements IHandler {
     @Override
     public void handlePacket(PanfuPacket packet, User sender)
     {
+        if((System.currentTimeMillis() - sender.getLastChatMessageTime()) < 100) {
+            sender.disconnect("CMD_CHAT > You are chatting too fast!");
+        }
+        if(Integer.valueOf(GameServer.getProperties().getProperty("chat.antispam.enabled")) != 0) {
+            int seconds = Integer.parseInt(GameServer.getProperties().getProperty("chat.antispam.secondsbetweenmessages"));
+            if ((System.currentTimeMillis() - sender.getLastChatMessageTime()) < (seconds * 1000)) {
+                sender.giveSpamWarning();
+            }
+        }
         String text = packet.readString();
         if(text.length() > 120) {
             sender.disconnect("KICK_SHUTDOWN_MSG");
@@ -22,7 +32,8 @@ public class CMD_CHAT implements IHandler {
             textParts.remove(0);
         }
         text = String.join(" ", textParts).replaceAll("\\<[^>]*>","");
-
+        sender.setLastChatMessage(text);
+        sender.setLastChatMessageTime(System.currentTimeMillis());
         if(sender.getSheriff() > 0) {
             text = "#" + GameServer.getProperties().getProperty("chat.sheriff.prefix") + " " + text;
         }
@@ -31,5 +42,6 @@ public class CMD_CHAT implements IHandler {
         chatPacket.writeInt(sender.getUserId());
         chatPacket.writeString(text);
         sender.sendRoom(chatPacket);
+
     }
 }
