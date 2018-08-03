@@ -29,7 +29,7 @@ public class GameServerInitializer extends ChannelInitializer {
     public void initChannel(Channel channel)
     {
         ChannelPipeline pipeline = channel.pipeline();
-
+        pipeline.addLast("framer", new GameServerFrameDecoder(1000000));
         pipeline.addLast(new StringDecoder());
         pipeline.addLast(new StringEncoder());
         pipeline.addLast(new GameServerHandler(this.gameServer));
