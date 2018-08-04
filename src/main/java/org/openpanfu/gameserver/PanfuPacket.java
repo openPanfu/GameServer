@@ -58,6 +58,9 @@ public class PanfuPacket
     public int readInt()
     {
         try {
+            if(parameters.get(pos).contains(".")) {
+                return Integer.valueOf(parameters.get(pos).split("\\.")[0]);
+            }
             return Integer.valueOf(parameters.get(pos));
         } catch (Exception e) {
             return -1;
