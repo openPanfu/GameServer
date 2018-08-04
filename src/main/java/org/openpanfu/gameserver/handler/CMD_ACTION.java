@@ -16,6 +16,10 @@ public class CMD_ACTION implements IHandler {
         add("waterbomb");
         add("slimebomb");
         add("slimebombSprite");
+        add("sendFlyingCup");
+        add("flyingCup");
+        add("sendFlyingBottle");
+        add("flyingBottle");
     }});
     @Override
     public void handlePacket(PanfuPacket packet, User sender) {
