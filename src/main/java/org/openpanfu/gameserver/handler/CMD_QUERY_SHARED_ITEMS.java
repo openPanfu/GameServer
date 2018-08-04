@@ -32,7 +32,7 @@ public class CMD_QUERY_SHARED_ITEMS implements IHandler {
             case RoomCommands.TYPE_GETITEMSSTATE:
                 List<User> users = sender.getGameServer().getSessionManager().getUsersInRoom(roomToQuery);
                 for(User u : users) {
-                    if(u.getInteractingWith() > -1) {
+                    if(u.getInteractingWith() != -1) {
                         interactables[u.getInteractingWith()] = u.getUserId();
                     }
                 }
@@ -44,7 +44,11 @@ public class CMD_QUERY_SHARED_ITEMS implements IHandler {
                 int itemId = packet.readInt();
                 int userId = packet.readInt();
                 result.writeInt(itemId);
-                result.writeInt(sender.getUserId());
+                if(userId == -1) {
+                    result.writeInt(-1);
+                } else {
+                    result.writeInt(sender.getUserId());
+                }
                 sender.setInteractingWith(itemId);
                 sender.sendRoom(result);
                 return;

@@ -7,7 +7,7 @@ import org.openpanfu.gameserver.constants.PlayerToPlayerCommands;
 
 public class CMD_UPDATE_AVATAR implements IP2PHandler {
     @Override
-    public void handlePacket(PanfuPacket packet, String reciever, User sender) {
+    public void handlePacket(PanfuPacket packet, String receiver, User sender) {
         PanfuPacket response = new PanfuPacket(Packets.RES_PLAYER_TO_PLAYER);
         String pokopet = packet.readString();
         int unknown = packet.readInt();
@@ -17,6 +17,6 @@ public class CMD_UPDATE_AVATAR implements IP2PHandler {
         response.writeString(pokopet);
         response.writeInt(sender.getSheriff());
         response.writeString(playerString);
-        sender.sendRoom(response);
+        sender.sendForReceiver(response, receiver);
     }
 }

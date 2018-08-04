@@ -257,6 +257,60 @@ public class User {
         }
     }
 
+    public void sendForReceiver(PanfuPacket PP, String receiver) {
+        if(receiver.contains(",")) {
+            String[] split = receiver.split(",");
+            if(split[0].equals(String.valueOf(PlayerToPlayerCommands.P2P_RECEIVER_ALL))) {
+                List<User> users = getGameServer().getSessionManager().getUsers();
+                for(User user : users) {
+                    if(user.getUserId() == this.getUserId() && user.getUserId() != Integer.valueOf(split[1]))
+                        continue;
+                    user.sendPacket(PP);
+                }
+                return;
+            }
+            if(split[0].equals(String.valueOf(PlayerToPlayerCommands.P2P_RECEIVER_ROOM))) {
+                List<User> users = getGameServer().getSessionManager().getUsersInRoom(this.getRoomId());
+                for(User user : users) {
+                    if(user.getUserId() == this.getUserId() && user.getUserId() != Integer.valueOf(split[1]))
+                        continue;
+                    user.sendPacket(PP);
+                }
+                return;
+            }
+            return;
+        }
+
+        if(receiver.equals(String.valueOf(PlayerToPlayerCommands.P2P_RECEIVER_ALL))) {
+            List<User> users = getGameServer().getSessionManager().getUsers();
+            for(User user : users) {
+                if(user.getUserId() == this.getUserId())
+                    continue;
+                user.sendPacket(PP);
+            }
+            return;
+        }
+
+        if(receiver.equals(String.valueOf(PlayerToPlayerCommands.P2P_RECEIVER_ROOM))) {
+            List<User> users = getGameServer().getSessionManager().getUsersInRoom(this.getRoomId());
+            for(User user : users) {
+                if(user.getUserId() == this.getUserId())
+                    continue;
+                user.sendPacket(PP);
+            }
+            return;
+        }
+
+        int receiverAsInt = Integer.valueOf(receiver);
+        // User
+        if(receiverAsInt > 0) {
+            User user = getGameServer().getSessionManager().getUserById(receiverAsInt);
+            if(user != null) {
+                user.sendPacket(PP);
+            }
+        }
+    }
+
     public int getInteractingWith()
     {
         return interactingWith;

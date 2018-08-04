@@ -4,5 +4,5 @@ import org.openpanfu.gameserver.PanfuPacket;
 import org.openpanfu.gameserver.User;
 
 public interface IP2PHandler {
-    void handlePacket(PanfuPacket packet, String reciever, User sender);
+    void handlePacket(PanfuPacket packet, String receiver, User sender);
 }

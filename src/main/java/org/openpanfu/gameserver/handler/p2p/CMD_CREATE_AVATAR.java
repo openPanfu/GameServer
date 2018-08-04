@@ -7,7 +7,7 @@ import org.openpanfu.gameserver.constants.PlayerToPlayerCommands;
 
 public class CMD_CREATE_AVATAR implements IP2PHandler {
     @Override
-    public void handlePacket(PanfuPacket packet, String reciever, User sender) {
+    public void handlePacket(PanfuPacket packet, String receiver, User sender) {
         PanfuPacket response = new PanfuPacket(Packets.RES_PLAYER_TO_PLAYER);
         int x = packet.readInt();
         int y = packet.readInt();
@@ -27,6 +27,6 @@ public class CMD_CREATE_AVATAR implements IP2PHandler {
         response.writeString(pokopetType);
         response.writeInt(sender.getSheriff());
         response.writeString(clothes);
-        sender.sendRoomExcludingMe(response);
+        sender.sendForReceiver(response, receiver);
     }
 }
