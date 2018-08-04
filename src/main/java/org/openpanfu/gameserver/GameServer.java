@@ -24,7 +24,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.concurrent.Executors;
 
 public class GameServer {
     private static List<GameServer> gameServers = new ArrayList<GameServer>();
@@ -81,7 +80,7 @@ public class GameServer {
             e.printStackTrace();
             return;
         }
-        Handler.Initialize();
+        Handler.initialize();
         if(Database.connect()) {
             Connection database = Database.getConnection();
             Statement st = database.createStatement();

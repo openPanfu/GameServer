@@ -9,6 +9,7 @@ package org.openpanfu.gameserver.handler;
 
 import org.openpanfu.gameserver.constants.Packets;
 import org.openpanfu.gameserver.constants.RoomCommands;
+import org.openpanfu.gameserver.handler.p2p.P2PHandler;
 import org.openpanfu.gameserver.util.Logger;
 
 import java.util.HashMap;
@@ -17,7 +18,7 @@ public class Handler
 {
     public static HashMap<Integer, IHandler> handlers = new HashMap<Integer, IHandler>();
 
-    public static void Initialize()
+    public static void initialize()
     {
         Logger.info("Initializing Handlers...");
         handlers.put(Packets.CMD_LOGIN, new CMD_LOGIN());
@@ -34,5 +35,6 @@ public class Handler
         handlers.put(Packets.CMD_QUIT_GAME, new CMD_QUIT_GAME());
         handlers.put(RoomCommands.QUERY_SHARED_ITEMS, new CMD_QUERY_SHARED_ITEMS());
         Logger.info("Registered " + handlers.size() + " Packet handlers.");
+        P2PHandler.initialize();
     }
 }
