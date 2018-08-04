@@ -23,6 +23,16 @@ public class CMD_ACTION implements IHandler {
         add("sendPancake");
         add("pancake");
         add("flyingPillow");
+        add("sendFlyingBottle2");
+        add("flyingBottle2");
+        add("sendCake");
+        add("cake");
+        add("blueSlimebombSprite");
+        add("pinkSlimebombSprite");
+        add("icecubeSpell");
+        add("masterOfIce");
+        add("hole");
+        add("teleportation");
     }});
     @Override
     public void handlePacket(PanfuPacket packet, User sender) {
@@ -63,7 +73,7 @@ public class CMD_ACTION implements IHandler {
                         sender.sendAlert(String.format("CMD_ACTION: Unknown throwable: %s", toThrow));
                     }
                 } else {
-                    Logger.warning(String.format("Prevented user %s (%d) from throwing an item because his last action wasn't an throw action."));
+                    Logger.warning(String.format("Prevented user %s (%d) from throwing an item because his last action wasn't an throw action.", sender.getUsername(), sender.getUserId()));
                 }
                 return;
             }
@@ -113,6 +123,20 @@ public class CMD_ACTION implements IHandler {
                 return;
             }
 
+            // Lake slide
+            if(action.equals("doSlideLakeAnimation") && sender.getRoomId() == 39) {
+                int endPosX = packet.readInt();
+                int endPosY = packet.readInt();
+                int height = packet.readInt();
+                String hoop = packet.readString();
+                actionBroadcast.writeString("doSlideLakeAnimation");
+                actionBroadcast.writeInt(endPosX);
+                actionBroadcast.writeInt(endPosY);
+                actionBroadcast.writeInt(height);
+                actionBroadcast.writeString(hoop);
+                sender.sendRoom(actionBroadcast);
+                return;
+            }
             actionBroadcast.writeString(action);
             sender.setLastActionPerformed(action);
 
