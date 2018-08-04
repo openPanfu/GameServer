@@ -20,6 +20,9 @@ public class CMD_ACTION implements IHandler {
         add("flyingCup");
         add("sendFlyingBottle");
         add("flyingBottle");
+        add("sendPancake");
+        add("pancake");
+        add("flyingPillow");
     }});
     @Override
     public void handlePacket(PanfuPacket packet, User sender) {
