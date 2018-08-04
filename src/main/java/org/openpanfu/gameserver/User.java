@@ -79,6 +79,13 @@ public class User {
         this.disconnect();
     }
 
+    public void setChatEnabled(boolean enabled)
+    {
+        PanfuPacket packetToInform = new PanfuPacket(Packets.RES_TOGGLE_SAFE_CHAT);
+        packetToInform.writeInt(enabled ? 0 : 1);
+        this.sendPacket(packetToInform);
+    }
+
     public void sendAlert(String message)
     {
         PanfuPacket gameServerAlert = new PanfuPacket(Packets.RES_ON_SHOW_GS_MSG);

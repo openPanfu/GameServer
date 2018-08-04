@@ -28,6 +28,7 @@ public class Handler
         handlers.put(Packets.CMD_PLAYER_TO_PLAYER, new CMD_PLAYER_TO_PLAYER());
         handlers.put(Packets.CMD_MOVE, new CMD_MOVE());
         handlers.put(Packets.CMD_CHAT, new CMD_CHAT());
+        handlers.put(Packets.CMD_SAFE_CHAT, new CMD_SAFE_CHAT());
         handlers.put(Packets.CMD_EMOTE, new CMD_EMOTE());
         handlers.put(Packets.CMD_ACTION, new CMD_ACTION());
         handlers.put(Packets.CMD_JOIN_ROOM, new CMD_JOIN_ROOM());

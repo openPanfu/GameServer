@@ -29,6 +29,7 @@ public class CMD_GET_ROOM_ATTENDEES implements IHandler {
         setAvatar.writeInt(sender.getY());
         setAvatar.writeString(sender.getUsername());
         sender.sendRoomExcludingMe(setAvatar);
+        sender.setChatEnabled(sender.getGameServer().isChatEnabled());
     }
 
     private String getRoomString(int roomId, boolean inHome, GameServer gameServer)

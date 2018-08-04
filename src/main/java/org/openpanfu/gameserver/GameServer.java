@@ -32,6 +32,7 @@ public class GameServer {
     private int id;
     private String name;
     private int port;
+    private boolean chatEnabled = false;
     private SessionManager sessionManager;
     private Channel channel;
 
@@ -40,6 +41,7 @@ public class GameServer {
         this.name = name;
         this.port = port;
         this.sessionManager = new SessionManager();
+        this.chatEnabled = (Integer.valueOf(GameServer.getProperties().getProperty("chat.forcesafechat")) == 0);
 
         Logger.info("["+this.id+"] Starting gameserver on port: " + port);
 
@@ -125,5 +127,9 @@ public class GameServer {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean isChatEnabled() {
+        return chatEnabled;
     }
 }

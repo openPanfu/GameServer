@@ -24,25 +24,26 @@ public class CMD_CHAT implements IHandler {
                 return;
             }
         }
-        String text = packet.readString();
-        if(text.length() > 120) {
-            sender.disconnect("KICK_SHUTDOWN_MSG");
-        }
-        List<String> textParts = new ArrayList(Arrays.asList(text.split(" ")));
-        if(textParts.get(0).startsWith("#")) {
-            textParts.remove(0);
-        }
-        text = String.join(" ", textParts).replaceAll("\\<[^>]*>","");
-        sender.setLastChatMessage(text);
-        sender.setLastChatMessageTime(System.currentTimeMillis());
-        if(sender.getSheriff() > 0) {
-            text = "#" + GameServer.getProperties().getProperty("chat.sheriff.prefix") + " " + text;
-        }
+        if(sender.getGameServer().isChatEnabled()) {
+            String text = packet.readString();
+            if (text.length() > 120) {
+                sender.disconnect("KICK_SHUTDOWN_MSG");
+            }
+            List<String> textParts = new ArrayList(Arrays.asList(text.split(" ")));
+            if (textParts.get(0).startsWith("#")) {
+                textParts.remove(0);
+            }
+            text = String.join(" ", textParts).replaceAll("\\<[^>]*>", "");
+            sender.setLastChatMessage(text);
+            sender.setLastChatMessageTime(System.currentTimeMillis());
+            if (sender.getSheriff() > 0) {
+                text = "#" + GameServer.getProperties().getProperty("chat.sheriff.prefix") + " " + text;
+            }
 
-        PanfuPacket chatPacket = new PanfuPacket(Packets.RES_CHAT_MSG);
-        chatPacket.writeInt(sender.getUserId());
-        chatPacket.writeString(text);
-        sender.sendRoom(chatPacket);
-
+            PanfuPacket chatPacket = new PanfuPacket(Packets.RES_CHAT_MSG);
+            chatPacket.writeInt(sender.getUserId());
+            chatPacket.writeString(text);
+            sender.sendRoom(chatPacket);
+        }
     }
 }
