@@ -15,6 +15,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import org.openpanfu.gameserver.database.Database;
+import org.openpanfu.gameserver.games.multiplayer.FourBoom;
+import org.openpanfu.gameserver.games.multiplayer.RockPaperScissors;
 import org.openpanfu.gameserver.handler.Handler;
 import org.openpanfu.gameserver.sessions.SessionManager;
 import org.openpanfu.gameserver.util.Logger;
@@ -36,13 +38,19 @@ public class GameServer {
     private SessionManager sessionManager;
     private Channel channel;
 
+    // Multiplayer games
+
+    private FourBoom fourBoom;
+    private RockPaperScissors rockPaperScissors;
+
     public GameServer(int id, String name, int port) {
         this.id = id;
         this.name = name;
         this.port = port;
         this.sessionManager = new SessionManager();
         this.chatEnabled = (Integer.valueOf(GameServer.getProperties().getProperty("chat.forcesafechat")) == 0);
-
+        this.fourBoom = new FourBoom();
+        this.rockPaperScissors = new RockPaperScissors();
         Logger.info("["+this.id+"] Starting gameserver on port: " + port);
 
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
@@ -131,5 +139,13 @@ public class GameServer {
 
     public boolean isChatEnabled() {
         return chatEnabled;
+    }
+
+    public FourBoom getFourBoom() {
+        return fourBoom;
+    }
+
+    public RockPaperScissors getRockPaperScissors() {
+        return rockPaperScissors;
     }
 }

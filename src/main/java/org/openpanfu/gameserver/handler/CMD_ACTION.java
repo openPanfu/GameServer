@@ -33,6 +33,8 @@ public class CMD_ACTION implements IHandler {
         add("masterOfIce");
         add("hole");
         add("teleportation");
+        add("gameInvite");
+        add("gameInvite_41_");
     }});
     @Override
     public void handlePacket(PanfuPacket packet, User sender) {
@@ -75,6 +77,67 @@ public class CMD_ACTION implements IHandler {
                 } else {
                     Logger.warning(String.format("Prevented user %s (%d) from throwing an item because his last action wasn't an throw action.", sender.getUsername(), sender.getUserId()));
                 }
+                return;
+            }
+
+            // RPS - GameId 41
+            if(action.equals("gameInvite")) {
+                packet.readInt(); // X - Unused in invites, always 0.
+                packet.readInt(); // Y - Unused in invites, always 0.
+                int gameId = packet.readInt();
+                int userToInvite = packet.readInt();
+                actionBroadcast.writeString("gameInvite");
+                actionBroadcast.writeInt(0);
+                actionBroadcast.writeInt(0);
+                actionBroadcast.writeInt(gameId);
+                actionBroadcast.writeInt(userToInvite);
+                actionBroadcast.writeString("false");
+                sender.sendRoom(actionBroadcast);
+                return;
+            }
+
+            if(action.equals("gameInviteAccepted")) {
+                packet.readInt(); // X - Unused when accepting, always 0.
+                int myId = packet.readInt();
+                int gameId = packet.readInt();
+                int victimId = packet.readInt();
+                actionBroadcast.writeString("gameInviteAccepted");
+                actionBroadcast.writeInt(0);
+                actionBroadcast.writeInt(myId);
+                actionBroadcast.writeInt(gameId);
+                actionBroadcast.writeInt(victimId);
+                actionBroadcast.writeString("false");
+                sender.sendRoom(actionBroadcast);
+                return;
+            }
+
+            if(action.equals("invitedPlayerLoadGame")) {
+                packet.readInt(); // X - Unused when accepting, always 0.
+                int myId = packet.readInt();
+                int gameId = packet.readInt();
+                int victimId = packet.readInt();
+                actionBroadcast.writeString("invitedPlayerLoadGame");
+                actionBroadcast.writeInt(0);
+                actionBroadcast.writeInt(myId);
+                actionBroadcast.writeInt(gameId);
+                actionBroadcast.writeInt(victimId);
+                actionBroadcast.writeString("false");
+                sender.sendRoom(actionBroadcast);
+                return;
+            }
+
+            if(action.equals("gameInviteDenied")) {
+                packet.readInt(); // X - Unused when accepting, always 0.
+                int myId = packet.readInt();
+                int gameId = packet.readInt();
+                int victimId = packet.readInt();
+                actionBroadcast.writeString("gameInviteDenied");
+                actionBroadcast.writeInt(0);
+                actionBroadcast.writeInt(myId);
+                actionBroadcast.writeInt(gameId);
+                actionBroadcast.writeInt(victimId);
+                actionBroadcast.writeString("false");
+                sender.sendRoom(actionBroadcast);
                 return;
             }
 

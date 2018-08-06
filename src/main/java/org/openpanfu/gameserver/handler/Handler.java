@@ -33,6 +33,7 @@ public class Handler
         handlers.put(Packets.CMD_ACTION, new CMD_ACTION());
         handlers.put(Packets.CMD_JOIN_ROOM, new CMD_JOIN_ROOM());
         handlers.put(Packets.CMD_JOIN_GAME, new CMD_JOIN_GAME());
+        handlers.put(Packets.CMD_ENTER_MULTIGAME, new CMD_ENTER_MULTIGAME());
         handlers.put(Packets.CMD_QUIT_GAME, new CMD_QUIT_GAME());
         handlers.put(RoomCommands.QUERY_SHARED_ITEMS, new CMD_QUERY_SHARED_ITEMS());
         Logger.info("Registered " + handlers.size() + " Packet handlers.");

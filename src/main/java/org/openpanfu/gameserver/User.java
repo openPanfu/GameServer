@@ -30,6 +30,7 @@ public class User {
     private GameServer gameServer;
     private boolean inHome = false;
     private int gameId = -1;
+    private User multiGamePartner = null;
     private int roomId = -1;
     private int x;
     private int y;
@@ -58,6 +59,18 @@ public class User {
                 Logger.warning("User tried inputting a forbidden packet for the state he is in! (Not logged in) Attempted packet: " + panfuPacket.getHeader());
                 return;
             }
+        }
+
+        if(panfuPacket.getHeader() == Packets.CMD_MULTIGAME) {
+            if(getMultiGamePartner() != null) {
+                if(gameId == 25) {
+                    gameServer.getFourBoom().onMessage(this, panfuPacket);
+                }
+                if(gameId == 41) {
+                    gameServer.getRockPaperScissors().onMessage(this, panfuPacket);
+                }
+            }
+            return;
         }
 
         if(packetHandler == null) {
@@ -201,6 +214,12 @@ public class User {
         }
 
         if(this.isLoggedIn) {
+            if(this.gameId == 25) {
+                gameServer.getFourBoom().onExit(this);
+            }
+            if(this.gameId == 41) {
+                gameServer.getRockPaperScissors().onExit(this);
+            }
             gameServer.getSessionManager().removeUserById(this.userId);
             gameServer.updateUserCount();
             try {
@@ -355,6 +374,12 @@ public class User {
 
     public void quitGame()
     {
+        if(this.gameId == 25) {
+            gameServer.getFourBoom().onExit(this);
+        }
+        if(this.gameId == 41) {
+            gameServer.getRockPaperScissors().onExit(this);
+        }
         this.gameId = -1;
     }
 
@@ -477,5 +502,13 @@ public class User {
         alert = alert.replaceAll("&&warns&&", String.valueOf(this.spamWarning));
         alert = alert.replaceAll("&&maxwarns&&", GameServer.getProperties().getProperty("chat.antispam.warnings"));
         this.sendAlert(alert);
+    }
+
+    public User getMultiGamePartner() {
+        return multiGamePartner;
+    }
+
+    public void setMultiGamePartner(User multiGamePartner) {
+        this.multiGamePartner = multiGamePartner;
     }
 }
