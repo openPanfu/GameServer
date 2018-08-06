@@ -75,7 +75,7 @@ public class CMD_ACTION implements IHandler {
                         sender.sendAlert(String.format("CMD_ACTION: Unknown throwable: %s", toThrow));
                     }
                 } else {
-                    Logger.warning(String.format("Prevented user %s (%d) from throwing an item because his last action wasn't an throw action.", sender.getUsername(), sender.getUserId()));
+                    Logger.warning(String.format("Prevented user %s (%d) from throwing an item because his last action wasn't a throw action.", sender.getUsername(), sender.getUserId()));
                 }
                 return;
             }
