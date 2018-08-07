@@ -30,7 +30,7 @@ public class CMD_QUERY_SHARED_ITEMS implements IHandler {
         result.writeInt(roomToQuery);
         switch(type) {
             case RoomCommands.TYPE_GETITEMSSTATE:
-                List<User> users = sender.getGameServer().getSessionManager().getUsersInRoom(roomToQuery);
+                List<User> users = sender.getGameServer().getSessionManager().getUsersInRoom(roomToQuery, sender.isInHome(), sender.getSubRoom());
                 for(User u : users) {
                     if(u.getInteractingWith() != -1) {
                         interactables[u.getInteractingWith()] = u.getUserId();

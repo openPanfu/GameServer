@@ -32,6 +32,7 @@ public class User {
     private int gameId = -1;
     private User multiGamePartner = null;
     private int roomId = -1;
+    private int subRoom = 0;
     private int x;
     private int y;
     private int status = 0;
@@ -255,9 +256,26 @@ public class User {
             this.sendRoomExcludingMe(unset);
         }
         this.roomId = roomId;
+        this.inHome = false;
+        this.subRoom = 0;
         PanfuPacket joinRoom = new PanfuPacket(Packets.RES_ON_ROOM_JOINED);
         joinRoom.writeInt(this.roomId);
         this.sendPacket(joinRoom);
+    }
+
+    public void joinHome(int playerId)
+    {
+        if(this.roomId > -1) {
+            PanfuPacket unset = new PanfuPacket(Packets.RES_UNSET_AVATAR);
+            unset.writeInt(this.userId);
+            this.sendRoomExcludingMe(unset);
+        }
+        this.roomId = playerId;
+        this.inHome = true;
+        this.subRoom = 0;
+        PanfuPacket joinHome = new PanfuPacket(Packets.RES_ON_HOME_JOINED);
+        joinHome.writeInt(this.roomId);
+        this.sendPacket(joinHome);
     }
 
     public String getPlayerString()
@@ -267,7 +285,7 @@ public class User {
 
     public void sendRoomExcludingMe(PanfuPacket PP)
     {
-        List<User> users = gameServer.getSessionManager().getUsersInRoom(this.roomId);
+        List<User> users = gameServer.getSessionManager().getUsersInRoom(this.roomId, this.inHome, this.subRoom);
         for (User u : users) {
             if(u.isInHome() == inHome && u.userId != userId) {
                 u.sendPacket(PP);
@@ -277,7 +295,7 @@ public class User {
 
     public void sendRoom(PanfuPacket PP)
     {
-        List<User> users = gameServer.getSessionManager().getUsersInRoom(this.roomId);
+        List<User> users = gameServer.getSessionManager().getUsersInRoom(this.roomId, this.inHome, this.subRoom);
         for(User u : users) {
             u.sendPacket(PP);
         }
@@ -296,7 +314,7 @@ public class User {
                 return;
             }
             if(split[0].equals(String.valueOf(PlayerToPlayerCommands.P2P_RECEIVER_ROOM))) {
-                List<User> users = getGameServer().getSessionManager().getUsersInRoom(this.getRoomId());
+                List<User> users = getGameServer().getSessionManager().getUsersInRoom(this.getRoomId(), this.inHome, this.subRoom);
                 for(User user : users) {
                     if(user.getUserId() == this.getUserId() && user.getUserId() != Integer.valueOf(split[1]))
                         continue;
@@ -318,7 +336,7 @@ public class User {
         }
 
         if(receiver.equals(String.valueOf(PlayerToPlayerCommands.P2P_RECEIVER_ROOM))) {
-            List<User> users = getGameServer().getSessionManager().getUsersInRoom(this.getRoomId());
+            List<User> users = getGameServer().getSessionManager().getUsersInRoom(this.getRoomId(), this.inHome, this.subRoom);
             for(User user : users) {
                 if(user.getUserId() == this.getUserId())
                     continue;
@@ -510,5 +528,13 @@ public class User {
 
     public void setMultiGamePartner(User multiGamePartner) {
         this.multiGamePartner = multiGamePartner;
+    }
+
+    public int getSubRoom() {
+        return subRoom;
+    }
+
+    public void setSubRoom(int subRoom) {
+        this.subRoom = subRoom;
     }
 }

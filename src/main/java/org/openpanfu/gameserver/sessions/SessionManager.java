@@ -56,9 +56,9 @@ public class SessionManager {
         return this.sessions.values().stream().collect(Collectors.toList());
     }
 
-    public List<User> getUsersInRoom(int roomid)
+    public List<User> getUsersInRoom(int roomid, boolean inHome, int subroom)
     {
-        return this.sessions.values().stream().filter(s -> s.getRoomId() == roomid).collect(Collectors.toList());
+        return this.sessions.values().stream().filter(s -> s.getRoomId() == roomid && s.isInHome() == inHome && s.getSubRoom() == subroom).collect(Collectors.toList());
     }
 
     public ConcurrentMap<Integer, User> getSessions()

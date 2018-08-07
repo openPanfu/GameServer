@@ -7,6 +7,7 @@
 
 package org.openpanfu.gameserver.handler;
 
+import org.openpanfu.gameserver.constants.HomeCommands;
 import org.openpanfu.gameserver.constants.Packets;
 import org.openpanfu.gameserver.constants.RoomCommands;
 import org.openpanfu.gameserver.handler.p2p.P2PHandler;
@@ -32,10 +33,17 @@ public class Handler
         handlers.put(Packets.CMD_EMOTE, new CMD_EMOTE());
         handlers.put(Packets.CMD_ACTION, new CMD_ACTION());
         handlers.put(Packets.CMD_JOIN_ROOM, new CMD_JOIN_ROOM());
+        handlers.put(Packets.CMD_JOIN_HOME, new CMD_JOIN_HOME());
         handlers.put(Packets.CMD_JOIN_GAME, new CMD_JOIN_GAME());
         handlers.put(Packets.CMD_ENTER_MULTIGAME, new CMD_ENTER_MULTIGAME());
         handlers.put(Packets.CMD_QUIT_GAME, new CMD_QUIT_GAME());
         handlers.put(RoomCommands.QUERY_SHARED_ITEMS, new CMD_QUERY_SHARED_ITEMS());
+
+        // Home commands
+        handlers.put(HomeCommands.CMD_UPDATE_SOUND, new CMD_UPDATE_SOUND());
+        handlers.put(HomeCommands.CMD_UPDATE_ROOM, new CMD_UPDATE_ROOM());
+        handlers.put(HomeCommands.CMD_CHANGE_ROOM, new CMD_CHANGE_ROOM());
+
         Logger.info("Registered " + handlers.size() + " Packet handlers.");
         P2PHandler.initialize();
     }

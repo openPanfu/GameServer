@@ -16,6 +16,6 @@ public class P2PHandler {
         handlers.put(PlayerToPlayerCommands.CMD_SHOW_STATUS, new CMD_SHOW_STATUS());
         handlers.put(PlayerToPlayerCommands.CMD_HIDE_STATUS, new CMD_HIDE_STATUS());
         handlers.put(PlayerToPlayerCommands.CMD_USE_SHARED_ITEM, new CMD_USE_SHARED_ITEM());
-        Logger.info("Registered " + handlers.size() + " Packet handlers.");
+        Logger.info("Registered " + handlers.size() + " P2P Packet handlers.");
     }
 }
