@@ -9,4 +9,5 @@ public interface ICommand {
      * @param parameters the parameters that the user provided
      */
     public void onExecution(User invoker, String[] parameters);
+    public String getDescription();
 }

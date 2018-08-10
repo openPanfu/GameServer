@@ -3,7 +3,9 @@ package org.openpanfu.gameserver.commands;
 import org.openpanfu.gameserver.User;
 import org.openpanfu.gameserver.util.Logger;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 public class Commands {
     private static HashMap<String, ICommand> handlers = new HashMap<String, ICommand>();
@@ -28,6 +30,18 @@ public class Commands {
             Logger.error(String.format("Attempted to register command %s, this was denied because a command has already been registered with that handle.", handle));
         }
         return false;
+    }
+
+    public static String[] listCommands()
+    {
+        String[] commandsAndDescriptions = new String[handlers.size()];
+        Collection<ICommand> commandHandlers = handlers.values();
+        int i = 0;
+        for(ICommand command : commandHandlers) {
+            commandsAndDescriptions[i] = command.getDescription();
+            i++;
+        }
+        return commandsAndDescriptions;
     }
 
     public static void executeCommand(User sender, String handle, String[] arguments)
