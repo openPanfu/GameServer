@@ -44,17 +44,19 @@ public class CMD_CHAT implements IHandler {
             }
 
             text = String.join(" ", textParts).replaceAll("\\<[^>]*>", "");
-            sender.setLastChatMessage(text);
-            sender.setLastChatMessageTime(System.currentTimeMillis());
-            if (sender.getSheriff() > 0) {
-                text = "#" + GameServer.getProperties().getProperty("chat.sheriff.prefix") + " " + text;
-            }
+            if(PluginManager.handleUserChat(sender, text)) {
+                sender.setLastChatMessage(text);
+                sender.setLastChatMessageTime(System.currentTimeMillis());
+                if (sender.getSheriff() > 0) {
+                    text = "#" + GameServer.getProperties().getProperty("chat.sheriff.prefix") + " " + text;
+                }
 
-            PanfuPacket chatPacket = new PanfuPacket(Packets.RES_CHAT_MSG);
-            chatPacket.writeInt(sender.getUserId());
-            chatPacket.writeString(text);
-            sender.sendRoom(chatPacket);
-            PluginManager.onUserChat(sender, text);
+                PanfuPacket chatPacket = new PanfuPacket(Packets.RES_CHAT_MSG);
+                chatPacket.writeInt(sender.getUserId());
+                chatPacket.writeString(text);
+                sender.sendRoom(chatPacket);
+                PluginManager.onUserChat(sender, text);
+            }
         }
     }
 }
