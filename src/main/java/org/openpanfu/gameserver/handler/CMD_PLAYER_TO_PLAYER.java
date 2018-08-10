@@ -21,7 +21,7 @@ public class CMD_PLAYER_TO_PLAYER implements IHandler {
         String reciever = packet.readString();
         int command = packet.readInt();
 
-        IP2PHandler packetHandler = P2PHandler.handlers.get(command);
+        IP2PHandler packetHandler = P2PHandler.getHandlerForHeader(command);
         if(packetHandler == null) {
             Logger.warning("Unhandled P2P packet: " + command);
         } else {

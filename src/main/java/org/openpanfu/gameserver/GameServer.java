@@ -14,10 +14,14 @@ import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import org.openpanfu.gameserver.commands.Commands;
+import org.openpanfu.gameserver.commands.Help;
 import org.openpanfu.gameserver.database.Database;
 import org.openpanfu.gameserver.games.multiplayer.FourBoom;
 import org.openpanfu.gameserver.games.multiplayer.RockPaperScissors;
 import org.openpanfu.gameserver.handler.Handler;
+import org.openpanfu.gameserver.plugin.PluginLoader;
+import org.openpanfu.gameserver.plugin.PluginManager;
 import org.openpanfu.gameserver.sessions.SessionManager;
 import org.openpanfu.gameserver.util.Logger;
 
@@ -111,6 +115,8 @@ public class GameServer {
         } else {
             Logger.error("HALT! The database connection could not be initialized!");
         }
+        Commands.registerCommand("help", new Help());
+        PluginManager.loadPlugins("plugins");
     }
 
     public static Properties getProperties()

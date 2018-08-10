@@ -13,6 +13,7 @@ import org.openpanfu.gameserver.constants.PlayerToPlayerCommands;
 import org.openpanfu.gameserver.database.Database;
 import org.openpanfu.gameserver.handler.Handler;
 import org.openpanfu.gameserver.handler.IHandler;
+import org.openpanfu.gameserver.plugin.PluginManager;
 import org.openpanfu.gameserver.util.Logger;
 
 import java.sql.Connection;
@@ -54,7 +55,7 @@ public class User {
 
     public void handlePacket(PanfuPacket panfuPacket)
     {
-        IHandler packetHandler = Handler.handlers.get(panfuPacket.getHeader());
+        IHandler packetHandler = Handler.getHandlerForHeader(panfuPacket.getHeader());
         if(!this.isLoggedIn) {
             if(panfuPacket.getHeader() != Packets.CMD_LOGIN && panfuPacket.getHeader() != Packets.CMD_GET_SALT) {
                 Logger.warning("User tried inputting a forbidden packet for the state he is in! (Not logged in) Attempted packet: " + panfuPacket.getHeader());
@@ -77,7 +78,7 @@ public class User {
         if(packetHandler == null) {
             Logger.warning("Unhandled packet: " + Packets.headerToName(panfuPacket.getHeader()) + " (" + panfuPacket.getHeader() + ")");
         } else {
-            Handler.handlers.get(panfuPacket.getHeader()).handlePacket(panfuPacket, this);
+            Handler.getHandlerForHeader(panfuPacket.getHeader()).handlePacket(panfuPacket, this);
         }
     }
 
@@ -261,6 +262,7 @@ public class User {
         PanfuPacket joinRoom = new PanfuPacket(Packets.RES_ON_ROOM_JOINED);
         joinRoom.writeInt(this.roomId);
         this.sendPacket(joinRoom);
+        PluginManager.onUserJoinRoom(this, roomId, this.inHome);
     }
 
     public void joinHome(int playerId)
@@ -276,6 +278,7 @@ public class User {
         PanfuPacket joinHome = new PanfuPacket(Packets.RES_ON_HOME_JOINED);
         joinHome.writeInt(this.roomId);
         this.sendPacket(joinHome);
+        PluginManager.onUserJoinRoom(this, this.roomId, this.inHome);
     }
 
     public String getPlayerString()

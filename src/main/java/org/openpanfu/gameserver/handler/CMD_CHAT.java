@@ -3,7 +3,9 @@ package org.openpanfu.gameserver.handler;
 import org.openpanfu.gameserver.GameServer;
 import org.openpanfu.gameserver.PanfuPacket;
 import org.openpanfu.gameserver.User;
+import org.openpanfu.gameserver.commands.Commands;
 import org.openpanfu.gameserver.constants.Packets;
+import org.openpanfu.gameserver.plugin.PluginManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,6 +35,14 @@ public class CMD_CHAT implements IHandler {
             if (textParts.get(0).startsWith("#")) {
                 textParts.remove(0);
             }
+
+            if (textParts.get(0).startsWith(GameServer.getProperties().getProperty("chat.commands.prefix"))) {
+                String handle = textParts.remove(0).substring(1).toLowerCase();
+                String[] commandParameters = textParts.toArray(new String[0]);
+                Commands.executeCommand(sender, handle, commandParameters);
+                return;
+            }
+
             text = String.join(" ", textParts).replaceAll("\\<[^>]*>", "");
             sender.setLastChatMessage(text);
             sender.setLastChatMessageTime(System.currentTimeMillis());
@@ -44,6 +54,7 @@ public class CMD_CHAT implements IHandler {
             chatPacket.writeInt(sender.getUserId());
             chatPacket.writeString(text);
             sender.sendRoom(chatPacket);
+            PluginManager.onUserChat(sender, text);
         }
     }
 }

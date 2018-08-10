@@ -6,7 +6,7 @@ import org.openpanfu.gameserver.util.Logger;
 import java.util.HashMap;
 
 public class P2PHandler {
-    public static HashMap<Integer, IP2PHandler> handlers = new HashMap<Integer, IP2PHandler>();
+    private static HashMap<Integer, IP2PHandler> handlers = new HashMap<Integer, IP2PHandler>();
 
     public static void initialize()
     {
@@ -17,5 +17,10 @@ public class P2PHandler {
         handlers.put(PlayerToPlayerCommands.CMD_HIDE_STATUS, new CMD_HIDE_STATUS());
         handlers.put(PlayerToPlayerCommands.CMD_USE_SHARED_ITEM, new CMD_USE_SHARED_ITEM());
         Logger.info("Registered " + handlers.size() + " P2P Packet handlers.");
+    }
+
+    public static IP2PHandler getHandlerForHeader(int header)
+    {
+        return handlers.get(header);
     }
 }
