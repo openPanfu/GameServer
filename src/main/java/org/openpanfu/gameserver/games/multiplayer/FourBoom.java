@@ -7,7 +7,7 @@ import org.openpanfu.gameserver.constants.Packets;
 import org.openpanfu.gameserver.util.Logger;
 
 public class FourBoom {
-    private GameQueue queue;
+    private GameQueue queue = new GameQueue();
 
     // Called on CMD_ENTER_MULTIGAME
     public void onEnter(User user)
