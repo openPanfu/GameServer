@@ -156,6 +156,17 @@ public class GameServer {
         }
     }
 
+    public static User getUserById(int userId)
+    {
+        for(GameServer gs : gameServers) {
+            User u = gs.getSessionManager().getUserById(userId);
+            if(u != null) {
+                return u;
+            }
+        }
+        return null;
+    }
+
     public boolean isChatEnabled() {
         return chatEnabled;
     }

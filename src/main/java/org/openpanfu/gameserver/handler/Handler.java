@@ -11,6 +11,7 @@ import org.openpanfu.gameserver.constants.HomeCommands;
 import org.openpanfu.gameserver.constants.Packets;
 import org.openpanfu.gameserver.constants.RoomCommands;
 import org.openpanfu.gameserver.handler.p2p.P2PHandler;
+import org.openpanfu.gameserver.handler.special.CMD_INFOMESSAGE;
 import org.openpanfu.gameserver.util.Logger;
 
 import java.util.HashMap;
@@ -31,6 +32,7 @@ public class Handler
         addPacketHandler(Packets.CMD_SAFE_CHAT, new CMD_SAFE_CHAT());
         addPacketHandler(Packets.CMD_EMOTE, new CMD_EMOTE());
         addPacketHandler(Packets.CMD_ACTION, new CMD_ACTION());
+        addPacketHandler(Packets.CMD_ADDBUDDY, new CMD_ADDBUDDY());
         addPacketHandler(Packets.CMD_JOIN_ROOM, new CMD_JOIN_ROOM());
         addPacketHandler(Packets.CMD_JOIN_HOME, new CMD_JOIN_HOME());
         addPacketHandler(Packets.CMD_JOIN_GAME, new CMD_JOIN_GAME());
@@ -42,6 +44,10 @@ public class Handler
         addPacketHandler(HomeCommands.CMD_UPDATE_SOUND, new CMD_UPDATE_SOUND());
         addPacketHandler(HomeCommands.CMD_UPDATE_ROOM, new CMD_UPDATE_ROOM());
         addPacketHandler(HomeCommands.CMD_CHANGE_ROOM, new CMD_CHANGE_ROOM());
+
+        // Special
+
+        addPacketHandler(Packets.CMD_INFOMESSAGE, new CMD_INFOMESSAGE());
 
         Logger.info("Registered " + handlers.size() + " Packet handlers.");
         P2PHandler.initialize();

@@ -52,6 +52,10 @@ public class Packets
     public static final int CMD_RECIEVE_NEW_MSGBOARD_MSG = 270;
     public static final int CMD_GET_SALT = 301;
 
+    // Special
+
+    public static final int CMD_INFOMESSAGE = 900;
+
     // S->C
     public static final int RES_ON_LOGIN = 0;
     public static final int RES_DISCONNECT = 2;
@@ -113,6 +117,10 @@ public class Packets
     public static final int RES_ON_GET_SALT = 301;
     public static final int RES_ON_GET_ROBOT_ATTACK = 302;
     public static final int RES_ON_GET_SP_GP = 310;
+
+    // Special
+
+    public static final int RES_ON_INFO_ACKNOWLEDGEMENT = 901;
 
     public static String headerToName(int header)
     {
