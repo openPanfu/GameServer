@@ -23,6 +23,7 @@ import org.openpanfu.gameserver.handler.Handler;
 import org.openpanfu.gameserver.plugin.PluginLoader;
 import org.openpanfu.gameserver.plugin.PluginManager;
 import org.openpanfu.gameserver.sessions.SessionManager;
+import org.openpanfu.gameserver.util.Key;
 import org.openpanfu.gameserver.util.Logger;
 
 import java.io.FileInputStream;
@@ -30,6 +31,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class GameServer {
     private static List<GameServer> gameServers = new ArrayList<GameServer>();
@@ -40,6 +42,7 @@ public class GameServer {
     private int port;
     private boolean chatEnabled = false;
     private SessionManager sessionManager;
+    private String secretKey = "";
     private Channel channel;
 
     // Multiplayer games
@@ -106,6 +109,16 @@ public class GameServer {
                 int port = resultSet.getInt("port");
                 GameServer gameServer = new GameServer(id, name, port);
                 gameServers.add(gameServer);
+                try {
+                    Key keygen = new Key(64, ThreadLocalRandom.current());
+                    gameServer.setKey(keygen.nextString());
+                    PreparedStatement preparedStatement = database.prepareStatement("UPDATE gameservers SET secret_key = ? where id = ?");
+                    preparedStatement.setString(1, gameServer.getKey());
+                    preparedStatement.setInt(2, gameServer.getId());
+                    preparedStatement.executeUpdate();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
             database.close();
             for(GameServer gs : gameServers) {
@@ -153,5 +166,13 @@ public class GameServer {
 
     public RockPaperScissors getRockPaperScissors() {
         return rockPaperScissors;
+    }
+
+    public String getKey() {
+        return secretKey;
+    }
+
+    public void setKey(String secretKey) {
+        this.secretKey = secretKey;
     }
 }

@@ -42,6 +42,7 @@ public class CMD_LOGIN implements IHandler
                 Logger.info("User " + resultSet.getString("name") + " logged in!");
                 sender.getGameServer().getSessionManager().addUser(sender);
                 sender.setLoggedIn(true);
+                sender.nullTicketId();
 
                 // Plugins can deny a user's login by either returning false or setting their loggedIn to false.
                 if(PluginManager.handleUserConnect(sender) && sender.isLoggedIn()) {

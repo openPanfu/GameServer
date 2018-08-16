@@ -122,6 +122,19 @@ public class User {
         }
     }
 
+    public void nullTicketId()
+    {
+        try {
+            Connection database = Database.getConnection();
+            PreparedStatement preparedStatement = database.prepareStatement("UPDATE users SET ticket_id = NULL where id = ?");
+            preparedStatement.setInt(1, this.userId);
+            preparedStatement.executeUpdate();
+            database.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void sendPacket(PanfuPacket packet)
     {
         this.sendString(packet.toString());
