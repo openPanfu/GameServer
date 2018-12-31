@@ -33,6 +33,7 @@ public class Handler
         addPacketHandler(Packets.CMD_EMOTE, new CMD_EMOTE());
         addPacketHandler(Packets.CMD_ACTION, new CMD_ACTION());
         addPacketHandler(Packets.CMD_ADDBUDDY, new CMD_ADDBUDDY());
+        addPacketHandler(Packets.CMD_GET_ALL_HOUSES, new CMD_GET_ALL_HOUSES());
         addPacketHandler(Packets.CMD_JOIN_ROOM, new CMD_JOIN_ROOM());
         addPacketHandler(Packets.CMD_JOIN_HOME, new CMD_JOIN_HOME());
         addPacketHandler(Packets.CMD_JOIN_GAME, new CMD_JOIN_GAME());
