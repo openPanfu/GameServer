@@ -17,6 +17,8 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import org.openpanfu.gameserver.commands.Commands;
 import org.openpanfu.gameserver.commands.Help;
 import org.openpanfu.gameserver.database.Database;
+import org.openpanfu.gameserver.database.GameServerData;
+import org.openpanfu.gameserver.database.dao.GameServerDAO;
 import org.openpanfu.gameserver.games.multiplayer.FourBoom;
 import org.openpanfu.gameserver.games.multiplayer.RockPaperScissors;
 import org.openpanfu.gameserver.handler.Handler;
@@ -99,32 +101,13 @@ public class GameServer {
         }
         Handler.initialize();
         if(Database.connect()) {
-            Connection database = Database.getConnection();
-            Statement st = database.createStatement();
-            String query = ("SELECT * FROM gameservers ORDER BY id;");
-            ResultSet resultSet = st.executeQuery(query);
-            while(resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                int port = resultSet.getInt("port");
-                GameServer gameServer = new GameServer(id, name, port);
-                gameServers.add(gameServer);
-                try {
-                    Key keygen = new Key(64, ThreadLocalRandom.current());
-                    gameServer.setKey(keygen.nextString());
-                    PreparedStatement preparedStatement = database.prepareStatement("UPDATE gameservers SET secret_key = ? where id = ?");
-                    preparedStatement.setString(1, gameServer.getKey());
-                    preparedStatement.setInt(2, gameServer.getId());
-                    preparedStatement.executeUpdate();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            database.close();
-            for(GameServer gs : gameServers) {
-                gs.updateUserCount();
-                Logger.info("Gameserver " + gs.name + " is ready for connections.");
-            }
+        	for(GameServerData data : GameServerDAO.getGameServers()) {
+                GameServer gameserver = new GameServer(data.id, data.name, data.port);
+                gameServers.add(gameserver);
+                gameserver.updateUserCount();
+                GameServerDAO.setupKeys(gameserver);
+                Logger.info("Gameserver " + gameserver.name + " is ready for connections.");
+        	}
         } else {
             Logger.error("HALT! The database connection could not be initialized!");
         }
@@ -144,16 +127,7 @@ public class GameServer {
 
     public void updateUserCount()
     {
-        try {
-            Connection database = Database.getConnection();
-            PreparedStatement preparedStatement = database.prepareStatement("UPDATE gameservers SET player_count = ? where id = ?");
-            preparedStatement.setInt(1, this.sessionManager.getUserCount());
-            preparedStatement.setInt(2, this.id);
-            preparedStatement.executeUpdate();
-            database.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    	GameServerDAO.updateUserCount(this.id, this.sessionManager.getUserCount());
     }
 
     public static User getUserById(int userId)
