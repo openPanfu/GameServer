@@ -11,6 +11,8 @@ import org.openpanfu.gameserver.constants.Packets;
 import org.openpanfu.gameserver.PanfuPacket;
 import org.openpanfu.gameserver.User;
 import org.openpanfu.gameserver.database.Database;
+import org.openpanfu.gameserver.database.UserData;
+import org.openpanfu.gameserver.database.dao.UserDAO;
 import org.openpanfu.gameserver.plugin.PluginManager;
 import org.openpanfu.gameserver.util.Logger;
 
@@ -27,48 +29,38 @@ public class CMD_LOGIN implements IHandler
         int userId = packet.readInt();
         int sessionTicket = packet.readInt();
         int startRoom = packet.readInt();
-        try {
-            Connection database = Database.getConnection();
-            PreparedStatement preparedStatement = database.prepareStatement("SELECT * FROM users WHERE id = ? AND ticket_id = ? LIMIT 1");
-            preparedStatement.setInt(1, userId);
-            preparedStatement.setInt(2, sessionTicket);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()) {
-                sender.setUserId(resultSet.getInt("id"));
-                sender.setGoldpanda(resultSet.getInt("goldpanda"));
-                sender.setUsername(resultSet.getString("name"));
-                sender.setSheriff(resultSet.getInt("sheriff"));
-                sender.setCurrentGameServer(sender.getGameServer().getId());
-                Logger.info("User " + resultSet.getString("name") + " logged in!");
-                sender.getGameServer().getSessionManager().addUser(sender);
-                sender.setLoggedIn(true);
-                sender.nullTicketId();
-
-                // Plugins can deny a user's login by either returning false or setting their loggedIn to false.
-                if(PluginManager.handleUserConnect(sender) && sender.isLoggedIn()) {
-                    PanfuPacket onLoginPacket = new PanfuPacket(Packets.RES_ON_LOGIN);
-                    onLoginPacket.writeString("OK");
-                    sender.sendPacket(onLoginPacket);
-                    sender.setX(450);
-                    sender.setY(450);
-                    int[] randomRooms = {1, 2, 3, 4};
-                    if (startRoom > 0)
-                        sender.joinRoom(startRoom);
-                    else
-                        sender.joinRoom(getRandom(randomRooms));
-                    sender.getGameServer().updateUserCount();
-                    PluginManager.onUserConnect(sender);
-                } else {
-                    sender.disconnect();
-                }
+        UserData data = UserDAO.getByIdAndTicket(userId, sessionTicket);
+        if(data != null ) {
+            sender.setUserId(data.id);
+            sender.setGoldpanda(data.goldpanda);
+            sender.setUsername(data.name);
+            sender.setSheriff(data.sheriff);
+            sender.setCurrentGameServer(sender.getGameServer().getId());
+            Logger.info("User " + sender.getUsername() + " logged in!");
+            sender.getGameServer().getSessionManager().addUser(sender);
+            sender.setLoggedIn(true);
+            sender.nullTicketId();
+            
+            // Plugins can deny a user's login by either returning false or setting their loggedIn to false.
+            if(PluginManager.handleUserConnect(sender) && sender.isLoggedIn()) {
+                PanfuPacket onLoginPacket = new PanfuPacket(Packets.RES_ON_LOGIN);
+                onLoginPacket.writeString("OK");
+                sender.sendPacket(onLoginPacket);
+                sender.setX(450);
+                sender.setY(450);
+                int[] randomRooms = {1, 2, 3, 4};
+                if (startRoom > 0)
+                    sender.joinRoom(startRoom);
+                else
+                    sender.joinRoom(getRandom(randomRooms));
+                sender.getGameServer().updateUserCount();
+                PluginManager.onUserConnect(sender);
             } else {
-                sender.sendString("0;FAILED|10;0|");
-                sender.disconnect("KICK_LOGIN_FAILED_MSG");
+                sender.disconnect();
             }
-            database.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            sender.disconnect();
+        } else {
+            sender.sendString("0;FAILED|10;0|");
+            sender.disconnect("KICK_LOGIN_FAILED_MSG");
         }
     }
 

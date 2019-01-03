@@ -11,6 +11,7 @@ import io.netty.channel.Channel;
 import org.openpanfu.gameserver.constants.Packets;
 import org.openpanfu.gameserver.constants.PlayerToPlayerCommands;
 import org.openpanfu.gameserver.database.Database;
+import org.openpanfu.gameserver.database.dao.UserDAO;
 import org.openpanfu.gameserver.handler.Handler;
 import org.openpanfu.gameserver.handler.IHandler;
 import org.openpanfu.gameserver.plugin.PluginManager;
@@ -110,29 +111,12 @@ public class User {
 
     public void setCurrentGameServer(int gameServerId)
     {
-        try {
-            Connection database = Database.getConnection();
-            PreparedStatement preparedStatement = database.prepareStatement("UPDATE users SET current_gameserver = ? where id = ?");
-            preparedStatement.setInt(1, gameServerId);
-            preparedStatement.setInt(2, this.userId);
-            preparedStatement.executeUpdate();
-            database.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    	UserDAO.setCurrentGameServer(userId, gameServerId);
     }
 
     public void nullTicketId()
     {
-        try {
-            Connection database = Database.getConnection();
-            PreparedStatement preparedStatement = database.prepareStatement("UPDATE users SET ticket_id = NULL where id = ?");
-            preparedStatement.setInt(1, this.userId);
-            preparedStatement.executeUpdate();
-            database.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    	UserDAO.nullTicket(userId);
     }
 
     public void sendPacket(PanfuPacket packet)
@@ -237,15 +221,7 @@ public class User {
             }
             gameServer.getSessionManager().removeUserById(this.userId);
             gameServer.updateUserCount();
-            try {
-                Connection database = Database.getConnection();
-                PreparedStatement preparedStatement = database.prepareStatement("UPDATE users SET current_gameserver = NULL where id = ?");
-                preparedStatement.setInt(1, this.userId);
-                preparedStatement.executeUpdate();
-                database.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            UserDAO.clearCurrentGameServer(this.userId);
         }
     }
 
