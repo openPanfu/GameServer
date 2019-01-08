@@ -7,14 +7,14 @@
 
 package org.openpanfu.gameserver.handler;
 
+import java.util.HashMap;
+
 import org.openpanfu.gameserver.constants.HomeCommands;
 import org.openpanfu.gameserver.constants.Packets;
 import org.openpanfu.gameserver.constants.RoomCommands;
 import org.openpanfu.gameserver.handler.p2p.P2PHandler;
 import org.openpanfu.gameserver.handler.special.CMD_INFOMESSAGE;
 import org.openpanfu.gameserver.util.Logger;
-
-import java.util.HashMap;
 
 public class Handler {
 	private static HashMap<Integer, IHandler> handlers = new HashMap<Integer, IHandler>();

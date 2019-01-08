@@ -1,8 +1,8 @@
 package org.openpanfu.gameserver.games.multiplayer;
 
-import org.openpanfu.gameserver.User;
-
 import java.util.LinkedList;
+
+import org.openpanfu.gameserver.User;
 
 public class GameQueue {
 	private LinkedList<User> list = new LinkedList<>();

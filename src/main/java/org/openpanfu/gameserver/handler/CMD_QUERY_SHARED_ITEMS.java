@@ -7,12 +7,12 @@
 
 package org.openpanfu.gameserver.handler;
 
+import java.util.List;
+
 import org.openpanfu.gameserver.PanfuPacket;
 import org.openpanfu.gameserver.User;
 import org.openpanfu.gameserver.constants.Packets;
 import org.openpanfu.gameserver.constants.RoomCommands;
-
-import java.util.List;
 
 public class CMD_QUERY_SHARED_ITEMS implements IHandler {
 	@Override

@@ -7,14 +7,15 @@
 
 package org.openpanfu.gameserver.database;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
-import org.openpanfu.gameserver.GameServer;
-import org.openpanfu.gameserver.util.Logger;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
+
+import org.openpanfu.gameserver.GameServer;
+import org.openpanfu.gameserver.util.Logger;
+
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 public class Database {
 	private static HikariDataSource dataSource;

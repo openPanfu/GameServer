@@ -7,20 +7,17 @@
 
 package org.openpanfu.gameserver;
 
-import io.netty.channel.Channel;
+import java.util.List;
+
 import org.openpanfu.gameserver.constants.Packets;
 import org.openpanfu.gameserver.constants.PlayerToPlayerCommands;
-import org.openpanfu.gameserver.database.Database;
 import org.openpanfu.gameserver.database.dao.UserDAO;
 import org.openpanfu.gameserver.handler.Handler;
 import org.openpanfu.gameserver.handler.IHandler;
 import org.openpanfu.gameserver.plugin.PluginManager;
 import org.openpanfu.gameserver.util.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.List;
+import io.netty.channel.Channel;
 
 public class User {
 	private int userId = -1;

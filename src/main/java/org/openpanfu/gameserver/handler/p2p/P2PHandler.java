@@ -1,9 +1,9 @@
 package org.openpanfu.gameserver.handler.p2p;
 
+import java.util.HashMap;
+
 import org.openpanfu.gameserver.constants.PlayerToPlayerCommands;
 import org.openpanfu.gameserver.util.Logger;
-
-import java.util.HashMap;
 
 public class P2PHandler {
 	private static HashMap<Integer, IP2PHandler> handlers = new HashMap<Integer, IP2PHandler>();

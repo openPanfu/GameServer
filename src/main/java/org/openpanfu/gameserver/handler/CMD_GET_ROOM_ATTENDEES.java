@@ -7,12 +7,12 @@
 
 package org.openpanfu.gameserver.handler;
 
+import java.util.List;
+
 import org.openpanfu.gameserver.GameServer;
-import org.openpanfu.gameserver.constants.Packets;
 import org.openpanfu.gameserver.PanfuPacket;
 import org.openpanfu.gameserver.User;
-
-import java.util.List;
+import org.openpanfu.gameserver.constants.Packets;
 
 public class CMD_GET_ROOM_ATTENDEES implements IHandler {
 	@Override

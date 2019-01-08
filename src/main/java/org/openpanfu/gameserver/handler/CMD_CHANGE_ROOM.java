@@ -2,8 +2,6 @@ package org.openpanfu.gameserver.handler;
 
 import org.openpanfu.gameserver.PanfuPacket;
 import org.openpanfu.gameserver.User;
-import org.openpanfu.gameserver.constants.HomeCommands;
-import org.openpanfu.gameserver.constants.Packets;
 
 public class CMD_CHANGE_ROOM implements IHandler {
 	@Override

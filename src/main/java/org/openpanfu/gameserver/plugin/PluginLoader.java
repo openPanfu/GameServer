@@ -1,18 +1,13 @@
 package org.openpanfu.gameserver.plugin;
 
-import org.openpanfu.gameserver.util.Logger;
-
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
-import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.openpanfu.gameserver.util.Logger;
 
 public class PluginLoader {
 	private static final Pattern fileFilter = Pattern.compile("\\.jar$");

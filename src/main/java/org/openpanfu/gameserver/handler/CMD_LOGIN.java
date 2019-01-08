@@ -7,19 +7,15 @@
 
 package org.openpanfu.gameserver.handler;
 
-import org.openpanfu.gameserver.constants.Packets;
+import java.util.Random;
+
 import org.openpanfu.gameserver.PanfuPacket;
 import org.openpanfu.gameserver.User;
-import org.openpanfu.gameserver.database.Database;
+import org.openpanfu.gameserver.constants.Packets;
 import org.openpanfu.gameserver.database.UserData;
 import org.openpanfu.gameserver.database.dao.UserDAO;
 import org.openpanfu.gameserver.plugin.PluginManager;
 import org.openpanfu.gameserver.util.Logger;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.Random;
 
 public class CMD_LOGIN implements IHandler {
 	@Override

@@ -1,11 +1,10 @@
 package org.openpanfu.gameserver.commands;
 
-import org.openpanfu.gameserver.User;
-import org.openpanfu.gameserver.util.Logger;
-
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
+
+import org.openpanfu.gameserver.User;
+import org.openpanfu.gameserver.util.Logger;
 
 public class Commands {
 	private static HashMap<String, ICommand> handlers = new HashMap<String, ICommand>();

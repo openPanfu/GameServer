@@ -7,9 +7,9 @@
 
 package org.openpanfu.gameserver.handler;
 
-import org.openpanfu.gameserver.constants.Packets;
 import org.openpanfu.gameserver.PanfuPacket;
 import org.openpanfu.gameserver.User;
+import org.openpanfu.gameserver.constants.Packets;
 
 public class CMD_GET_SALT implements IHandler {
 	@Override

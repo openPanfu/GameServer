@@ -7,12 +7,13 @@
 
 package org.openpanfu.gameserver;
 
-import io.netty.channel.*;
-import io.netty.util.AttributeKey;
+import java.util.Arrays;
+
 import org.openpanfu.gameserver.util.Logger;
 
-import java.util.Arrays;
-import java.util.List;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.util.AttributeKey;
 
 public class GameServerHandler extends SimpleChannelInboundHandler<String> {
 	private GameServer gameServer;

@@ -7,12 +7,12 @@
 
 package org.openpanfu.gameserver.sessions;
 
-import org.openpanfu.gameserver.User;
-
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
+
+import org.openpanfu.gameserver.User;
 
 public class SessionManager {
 	private ConcurrentMap<Integer, User> sessions;

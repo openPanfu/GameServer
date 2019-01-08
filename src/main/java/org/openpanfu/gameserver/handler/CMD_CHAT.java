@@ -1,15 +1,15 @@
 package org.openpanfu.gameserver.handler;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.openpanfu.gameserver.GameServer;
 import org.openpanfu.gameserver.PanfuPacket;
 import org.openpanfu.gameserver.User;
 import org.openpanfu.gameserver.commands.Commands;
 import org.openpanfu.gameserver.constants.Packets;
 import org.openpanfu.gameserver.plugin.PluginManager;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class CMD_CHAT implements IHandler {
 	@Override

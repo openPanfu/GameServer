@@ -1,13 +1,13 @@
 package org.openpanfu.gameserver.plugin;
 
-import org.openpanfu.gameserver.User;
-import org.openpanfu.gameserver.util.Logger;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.jar.JarFile;
+
+import org.openpanfu.gameserver.User;
+import org.openpanfu.gameserver.util.Logger;
 
 public class PluginManager {
 	private static List<PluginInstance> plugins = new ArrayList<PluginInstance>();

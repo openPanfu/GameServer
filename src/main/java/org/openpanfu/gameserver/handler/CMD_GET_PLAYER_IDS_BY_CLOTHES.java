@@ -7,9 +7,9 @@
 
 package org.openpanfu.gameserver.handler;
 
-import org.openpanfu.gameserver.constants.Packets;
 import org.openpanfu.gameserver.PanfuPacket;
 import org.openpanfu.gameserver.User;
+import org.openpanfu.gameserver.constants.Packets;
 
 public class CMD_GET_PLAYER_IDS_BY_CLOTHES implements IHandler {
 	/* Now, this is an interesting story. */

@@ -1,6 +1,5 @@
 package org.openpanfu.gameserver.games.multiplayer;
 
-import org.openpanfu.gameserver.GameServer;
 import org.openpanfu.gameserver.PanfuPacket;
 import org.openpanfu.gameserver.User;
 import org.openpanfu.gameserver.constants.Packets;

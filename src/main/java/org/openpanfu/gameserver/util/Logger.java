@@ -7,10 +7,10 @@
 
 package org.openpanfu.gameserver.util;
 
-import org.openpanfu.gameserver.GameServer;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import org.openpanfu.gameserver.GameServer;
 
 public class Logger {
 	public static final String ANSI_RESET = "\u001B[0m";

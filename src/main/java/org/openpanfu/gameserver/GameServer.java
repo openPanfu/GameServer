@@ -9,11 +9,12 @@
 
 package org.openpanfu.gameserver;
 
-import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
+import java.io.FileInputStream;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+
 import org.openpanfu.gameserver.commands.Commands;
 import org.openpanfu.gameserver.commands.Help;
 import org.openpanfu.gameserver.database.Database;
@@ -22,18 +23,15 @@ import org.openpanfu.gameserver.database.dao.GameServerDAO;
 import org.openpanfu.gameserver.games.multiplayer.FourBoom;
 import org.openpanfu.gameserver.games.multiplayer.RockPaperScissors;
 import org.openpanfu.gameserver.handler.Handler;
-import org.openpanfu.gameserver.plugin.PluginLoader;
 import org.openpanfu.gameserver.plugin.PluginManager;
 import org.openpanfu.gameserver.sessions.SessionManager;
-import org.openpanfu.gameserver.util.Key;
 import org.openpanfu.gameserver.util.Logger;
 
-import java.io.FileInputStream;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-import java.util.concurrent.ThreadLocalRandom;
+import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.Channel;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 public class GameServer {
 	private static List<GameServer> gameServers = new ArrayList<GameServer>();

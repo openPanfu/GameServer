@@ -1,13 +1,13 @@
 package org.openpanfu.gameserver.plugin;
 
-import org.openpanfu.gameserver.util.Logger;
-
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Properties;
 import java.util.jar.JarFile;
+
+import org.openpanfu.gameserver.util.Logger;
 
 public class PluginInstance {
 	private String name;

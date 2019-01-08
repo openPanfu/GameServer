@@ -1,15 +1,15 @@
 package org.openpanfu.gameserver.handler.special;
 
+import java.net.InetSocketAddress;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openpanfu.gameserver.GameServer;
 import org.openpanfu.gameserver.PanfuPacket;
 import org.openpanfu.gameserver.User;
 import org.openpanfu.gameserver.constants.Packets;
 import org.openpanfu.gameserver.handler.IHandler;
 import org.openpanfu.gameserver.util.Logger;
-
-import java.net.InetSocketAddress;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CMD_INFOMESSAGE implements IHandler {
 	private List<String> blockList = new ArrayList<String>();

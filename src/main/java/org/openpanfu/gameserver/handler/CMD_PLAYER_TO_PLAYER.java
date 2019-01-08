@@ -7,9 +7,7 @@
 
 package org.openpanfu.gameserver.handler;
 
-import org.openpanfu.gameserver.constants.Packets;
 import org.openpanfu.gameserver.PanfuPacket;
-import org.openpanfu.gameserver.constants.PlayerToPlayerCommands;
 import org.openpanfu.gameserver.User;
 import org.openpanfu.gameserver.handler.p2p.IP2PHandler;
 import org.openpanfu.gameserver.handler.p2p.P2PHandler;

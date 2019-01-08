@@ -1,15 +1,15 @@
 package org.openpanfu.gameserver.handler;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
 import org.openpanfu.gameserver.GameServer;
 import org.openpanfu.gameserver.PanfuPacket;
 import org.openpanfu.gameserver.User;
 import org.openpanfu.gameserver.constants.Packets;
 import org.openpanfu.gameserver.util.Logger;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class CMD_ACTION implements IHandler {
 	final List<String> throwables = Collections.unmodifiableList(new ArrayList<String>() {
