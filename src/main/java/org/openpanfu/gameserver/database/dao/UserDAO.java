@@ -1,3 +1,10 @@
+/**
+ * This file is part of openPanfu, a project that imitates the Flex remoting
+ * and gameservers of Panfu.
+ *
+ * @author Altro50 <altro50@msn.com>
+ */
+
 package org.openpanfu.gameserver.database.dao;
 
 import java.sql.Connection;
@@ -9,6 +16,14 @@ import org.openpanfu.gameserver.database.Database;
 import org.openpanfu.gameserver.database.UserData;
 
 public class UserDAO {
+	
+	/**
+	 * Returns the user with the specified id, returns null if not found.
+	 * 
+	 * @author Altro50 <altro50@msn.com>
+	 * @param int id The user's id.
+	 * @return UserData | Null
+	 */
 	public static UserData getById(int id) {
 		Connection database = null;
 		try {
@@ -40,6 +55,14 @@ public class UserDAO {
 		return null;
 	}
 	
+	/**
+	 * Returns the user with the specified id AND ticket, returns null if not found.
+	 * 
+	 * @author Altro50 <altro50@msn.com>
+	 * @param int id The user's id
+	 * @param int ticket the user's ticket, they will give this ticket in CMD_LOGIN.
+	 * @return Void
+	 */
 	public static UserData getByIdAndTicket(int id, int ticket) {
 		Connection database = null;
 		try {
@@ -72,6 +95,13 @@ public class UserDAO {
 		return null;
 	}
 	
+	/**
+	 * Sets the user specified by id's session ticket to null, so they cannot reuse their ticket.
+	 * 
+	 * @author Altro50 <altro50@msn.com>
+	 * @param int id User Id.
+	 * @return UserData | Null
+	 */
 	public static void nullTicket(int id) {
         Connection database = null;
         try {
@@ -91,6 +121,13 @@ public class UserDAO {
         }
 	}
 	
+	/**
+	 * Sets the user specified by id's current gameserver, so their friends will know which server the user is on.
+	 * 
+	 * @author Altro50 <altro50@msn.com>
+	 * @param int id User Id.
+	 * @return Void
+	 */
 	public static void setCurrentGameServer(int id, int currentGameServer) {
 		Connection database = null;
         try {
@@ -111,6 +148,13 @@ public class UserDAO {
         }
 	}
 	
+	/**
+	 * Sets the user specified by id's current gameserver to NULL, so their friends will know the user isn't online.
+	 * 
+	 * @author Altro50 <altro50@msn.com>
+	 * @param int id User Id.
+	 * @return Void
+	 */
 	public static void clearCurrentGameServer(int id) {
 		Connection database = null;
         try {

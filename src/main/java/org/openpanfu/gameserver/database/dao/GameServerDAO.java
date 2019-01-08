@@ -68,7 +68,7 @@ public class GameServerDAO {
 	 * Sets up the keys for the GameServer, allowing the Information Server to communicate
 	 * with the GameServer securely.
 	 * 
-	 * @param gameserver
+	 * @param gameserver GameServer object
 	 */
 	public static void setupKeys(GameServer gameserver) {
 		Connection database = null;
@@ -93,8 +93,8 @@ public class GameServerDAO {
 	
 	/**
 	 * Updates the player count
-	 * @param serverId
-	 * @param playerCount
+	 * @param serverId Server id
+	 * @param playerCount The user count
 	 */
 	public static void updateUserCount(int serverId, int playerCount) {
         Connection database = null;
