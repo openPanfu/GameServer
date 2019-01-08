@@ -15,44 +15,45 @@ import org.openpanfu.gameserver.constants.RoomCommands;
 import java.util.List;
 
 public class CMD_QUERY_SHARED_ITEMS implements IHandler {
-    @Override
-    public void handlePacket(PanfuPacket packet, User sender) {
-        int type = packet.readInt();
-        int roomToQuery = packet.readInt();
-        final int interactableItems = 255;
-        int[] interactables = new int[interactableItems];
-        for(int temp = 0 ; temp < interactableItems; temp++) {
-            interactables[temp] = -1;
-        }
+	@Override
+	public void handlePacket(PanfuPacket packet, User sender) {
+		int type = packet.readInt();
+		int roomToQuery = packet.readInt();
+		final int interactableItems = 255;
+		int[] interactables = new int[interactableItems];
+		for (int temp = 0; temp < interactableItems; temp++) {
+			interactables[temp] = -1;
+		}
 
-        PanfuPacket result = new PanfuPacket(Packets.RES_RECEIVE_SHARED_ITEMS);
-        result.writeInt(type);
-        result.writeInt(roomToQuery);
-        switch(type) {
-            case RoomCommands.TYPE_GETITEMSSTATE:
-                List<User> users = sender.getGameServer().getSessionManager().getUsersInRoom(roomToQuery, sender.isInHome(), sender.getSubRoom());
-                for(User u : users) {
-                    if(u.getInteractingWith() != -1) {
-                        interactables[u.getInteractingWith()] = u.getUserId();
-                    }
-                }
-                for(int userInteracting : interactables) {
-                    result.writeInt(userInteracting);
-                }
-                break;
-            case RoomCommands.TYPE_UPDATEITEMSTATE:
-                int itemId = packet.readInt();
-                int userId = packet.readInt();
-                result.writeInt(itemId);
-                if(userId == -1) {
-                    result.writeInt(-1);
-                } else {
-                    result.writeInt(sender.getUserId());
-                }
-                sender.setInteractingWith(itemId);
-                sender.sendRoom(result);
-                return;
-        }
-        sender.sendPacket(result);
-    }
+		PanfuPacket result = new PanfuPacket(Packets.RES_RECEIVE_SHARED_ITEMS);
+		result.writeInt(type);
+		result.writeInt(roomToQuery);
+		switch (type) {
+		case RoomCommands.TYPE_GETITEMSSTATE:
+			List<User> users = sender.getGameServer().getSessionManager().getUsersInRoom(roomToQuery, sender.isInHome(),
+					sender.getSubRoom());
+			for (User u : users) {
+				if (u.getInteractingWith() != -1) {
+					interactables[u.getInteractingWith()] = u.getUserId();
+				}
+			}
+			for (int userInteracting : interactables) {
+				result.writeInt(userInteracting);
+			}
+			break;
+		case RoomCommands.TYPE_UPDATEITEMSTATE:
+			int itemId = packet.readInt();
+			int userId = packet.readInt();
+			result.writeInt(itemId);
+			if (userId == -1) {
+				result.writeInt(-1);
+			} else {
+				result.writeInt(sender.getUserId());
+			}
+			sender.setInteractingWith(itemId);
+			sender.sendRoom(result);
+			return;
+		}
+		sender.sendPacket(result);
+	}
 }

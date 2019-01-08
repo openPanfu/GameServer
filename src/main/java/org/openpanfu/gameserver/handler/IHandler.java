@@ -11,5 +11,5 @@ import org.openpanfu.gameserver.PanfuPacket;
 import org.openpanfu.gameserver.User;
 
 public interface IHandler {
-    void handlePacket(PanfuPacket packet, User sender);
+	void handlePacket(PanfuPacket packet, User sender);
 }

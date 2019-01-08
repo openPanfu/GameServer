@@ -10,70 +10,70 @@ import java.util.Properties;
 import java.util.jar.JarFile;
 
 public class PluginManager {
-    private static List<PluginInstance> plugins = new ArrayList<PluginInstance>();
-    public static void loadPlugins(String directory)
-    {
-        PluginLoader.loadPluginsInDirectory(directory);
-    }
-    public static void loadPlugin(File file, JarFile jarFile, Properties pluginProps)
-    {
-        PluginInstance pi = new PluginInstance(file, jarFile, pluginProps);
-        plugins.add(pi);
-    }
+	private static List<PluginInstance> plugins = new ArrayList<PluginInstance>();
 
-    // Functions to run on plugins
+	public static void loadPlugins(String directory) {
+		PluginLoader.loadPluginsInDirectory(directory);
+	}
 
-    // On functions (Run after doing something)
+	public static void loadPlugin(File file, JarFile jarFile, Properties pluginProps) {
+		PluginInstance pi = new PluginInstance(file, jarFile, pluginProps);
+		plugins.add(pi);
+	}
 
-    public static void onUserJoinRoom(User user, int roomId, boolean isHome) {
-        for(PluginInstance plugin : plugins) {
-            if(plugin.listening)
-                plugin.getPlugin().onUserJoinRoom(user, roomId, isHome);
-        }
-    }
+	// Functions to run on plugins
 
-    public static void onUserConnect(User user) {
-        for(PluginInstance plugin : plugins) {
-            if(plugin.listening)
-                plugin.getPlugin().onUserConnect(user);
-        }
-    }
+	// On functions (Run after doing something)
 
-    public static void onUserChat(User user, String message) {
-        for(PluginInstance plugin : plugins) {
-            if(plugin.listening)
-                plugin.getPlugin().onUserChat(user, message);
-        }
-    }
+	public static void onUserJoinRoom(User user, int roomId, boolean isHome) {
+		for (PluginInstance plugin : plugins) {
+			if (plugin.listening)
+				plugin.getPlugin().onUserJoinRoom(user, roomId, isHome);
+		}
+	}
 
-    // Handle functions (Run before doing something and can stop normal behaviour)
-    public static boolean handleUserJoinRoom(User user, int roomId, boolean isHome) {
-        for(PluginInstance plugin : plugins) {
-            if(plugin.listening && !plugin.getPlugin().handleUserJoinRoom(user, roomId, isHome)) {
-                Logger.debug("Exiting in handleUserJoinRoom due to " + plugin.getName());
-                return false;
-            }
-        }
-        return true;
-    }
+	public static void onUserConnect(User user) {
+		for (PluginInstance plugin : plugins) {
+			if (plugin.listening)
+				plugin.getPlugin().onUserConnect(user);
+		}
+	}
 
-    public static boolean handleUserConnect(User user) {
-        for(PluginInstance plugin : plugins) {
-            if(plugin.listening && !plugin.getPlugin().handleUserConnect(user)) {
-                return false;
-            }
-        }
-        return true;
-    }
+	public static void onUserChat(User user, String message) {
+		for (PluginInstance plugin : plugins) {
+			if (plugin.listening)
+				plugin.getPlugin().onUserChat(user, message);
+		}
+	}
 
-    public static boolean handleUserChat(User user, String message) {
-        for(PluginInstance plugin : plugins) {
-            if(plugin.listening && !plugin.getPlugin().handleUserChat(user, message)) {
-                Logger.debug("Exiting in handleUserChat due to " + plugin.getName());
-                return false;
-            }
-        }
-        return true;
-    }
+	// Handle functions (Run before doing something and can stop normal behaviour)
+	public static boolean handleUserJoinRoom(User user, int roomId, boolean isHome) {
+		for (PluginInstance plugin : plugins) {
+			if (plugin.listening && !plugin.getPlugin().handleUserJoinRoom(user, roomId, isHome)) {
+				Logger.debug("Exiting in handleUserJoinRoom due to " + plugin.getName());
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static boolean handleUserConnect(User user) {
+		for (PluginInstance plugin : plugins) {
+			if (plugin.listening && !plugin.getPlugin().handleUserConnect(user)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static boolean handleUserChat(User user, String message) {
+		for (PluginInstance plugin : plugins) {
+			if (plugin.listening && !plugin.getPlugin().handleUserChat(user, message)) {
+				Logger.debug("Exiting in handleUserChat due to " + plugin.getName());
+				return false;
+			}
+		}
+		return true;
+	}
 
 }

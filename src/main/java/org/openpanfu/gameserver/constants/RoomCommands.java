@@ -8,13 +8,13 @@
 package org.openpanfu.gameserver.constants;
 
 public class RoomCommands {
-    public static final int GET_ROOM_INFO = 70;
+	public static final int GET_ROOM_INFO = 70;
 
-    public static final int QUERY_SHARED_ITEMS = 140;
+	public static final int QUERY_SHARED_ITEMS = 140;
 
-    public static final int TYPE_GETITEMSTATE = 0;
+	public static final int TYPE_GETITEMSTATE = 0;
 
-    public static final int TYPE_GETITEMSSTATE = 1;
+	public static final int TYPE_GETITEMSSTATE = 1;
 
-    public static final int TYPE_UPDATEITEMSTATE = 2;
+	public static final int TYPE_UPDATEITEMSTATE = 2;
 }

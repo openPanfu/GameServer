@@ -18,20 +18,18 @@ import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 
 public class GameServerInitializer extends ChannelInitializer {
-    private GameServer gameServer;
+	private GameServer gameServer;
 
-    public GameServerInitializer(GameServer gameServer)
-    {
-        this.gameServer = gameServer;
-    }
+	public GameServerInitializer(GameServer gameServer) {
+		this.gameServer = gameServer;
+	}
 
-    @Override
-    public void initChannel(Channel channel)
-    {
-        ChannelPipeline pipeline = channel.pipeline();
-        pipeline.addLast("framer", new GameServerFrameDecoder(1000));
-        pipeline.addLast(new StringDecoder());
-        pipeline.addLast(new StringEncoder());
-        pipeline.addLast(new GameServerHandler(this.gameServer));
-    }
+	@Override
+	public void initChannel(Channel channel) {
+		ChannelPipeline pipeline = channel.pipeline();
+		pipeline.addLast("framer", new GameServerFrameDecoder(1000));
+		pipeline.addLast(new StringDecoder());
+		pipeline.addLast(new StringEncoder());
+		pipeline.addLast(new GameServerHandler(this.gameServer));
+	}
 }
